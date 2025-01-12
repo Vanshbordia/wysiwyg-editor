@@ -1,16 +1,28 @@
 class SimpleWYSIWYG {
-    constructor(selector) {
+    constructor(selector, options = {}) {
         this.container = document.querySelector(selector);
         if (!this.container) {
             throw new Error('Container element not found');
         }
+        
+        // Set custom submit handler if provided
+        this.onSubmit = options.onSubmit || null;
+        
         this.init();
         
         // Create global access point
         window.simpleEditor = this;
+        
+        // Create global variables for submitted content
+        window.wysiwygSubmittedHTML = '';
+        window.wysiwygSubmittedText = '';
     }
 
     init() {
+        // Create wrapper for editor and submit button
+        this.wrapper = document.createElement('div');
+        this.wrapper.className = 'simple-wysiwyg-wrapper';
+        
         // Create toolbar
         this.toolbar = document.createElement('div');
         this.toolbar.className = 'simple-wysiwyg-toolbar';
@@ -19,6 +31,16 @@ class SimpleWYSIWYG {
         this.editor = document.createElement('div');
         this.editor.className = 'simple-wysiwyg-editor';
         this.editor.contentEditable = true;
+
+        // Create submit button container
+        this.submitContainer = document.createElement('div');
+        this.submitContainer.className = 'simple-wysiwyg-submit-container';
+        
+        // Create submit button
+        this.submitButton = document.createElement('button');
+        this.submitButton.className = 'simple-wysiwyg-submit';
+        this.submitButton.innerHTML = '<i class="fas fa-check"></i> Submit';
+        this.submitButton.addEventListener('click', () => this.handleSubmit());
         
         // Add toolbar buttons
         const buttons = [
@@ -152,8 +174,11 @@ class SimpleWYSIWYG {
         });
 
         // Append elements to container
-        this.container.appendChild(this.toolbar);
-        this.container.appendChild(this.editor);
+        this.container.appendChild(this.wrapper);
+        this.wrapper.appendChild(this.toolbar);
+        this.wrapper.appendChild(this.editor);
+        this.wrapper.appendChild(this.submitContainer);
+        this.submitContainer.appendChild(this.submitButton);
 
         // Add input event listener
         this.editor.addEventListener('input', () => this.emitChange());
@@ -194,6 +219,29 @@ class SimpleWYSIWYG {
         // Also update global variables for easy access
         window.wysiwygHTML = this.getContent();
         window.wysiwygText = this.getText();
+    }
+
+    handleSubmit() {
+        const html = this.getContent();
+        const text = this.getText();
+        
+        // Update global variables
+        window.wysiwygSubmittedHTML = html;
+        window.wysiwygSubmittedText = text;
+        
+        // Call custom submit handler if provided
+        if (typeof this.onSubmit === 'function') {
+            this.onSubmit({ html, text });
+        }
+    }
+
+    // Method to set submit handler after initialization
+    setSubmitHandler(handler) {
+        if (typeof handler === 'function') {
+            this.onSubmit = handler;
+        } else {
+            throw new Error('Submit handler must be a function');
+        }
     }
 }
 

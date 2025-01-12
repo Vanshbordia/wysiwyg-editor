@@ -10,6 +10,7 @@ A lightweight, modern, and dependency-free WYSIWYG editor that can be easily int
 - Headings (H1-H6)
 - Code blocks and blockquotes
 - Lists and text alignment
+- Customizable submit handler
 - Modern design with customizable theme
 - No dependencies (except Font Awesome for icons)
 
@@ -36,9 +37,23 @@ A lightweight, modern, and dependency-free WYSIWYG editor that can be easily int
 <div id="editor"></div>
 ```
 
-2. Initialize the editor:
+2. Initialize the editor with an optional submit handler:
 ```javascript
-const editor = new SimpleWYSIWYG('#editor');
+// Method 1: Set handler during initialization
+const editor = new SimpleWYSIWYG('#editor', {
+    onSubmit: ({ html, text }) => {
+        // Handle submitted content
+        console.log('Submitted HTML:', html);
+        console.log('Submitted Text:', text);
+    }
+});
+
+// Method 2: Set handler after initialization
+editor.setSubmitHandler(({ html, text }) => {
+    // Handle submitted content
+    console.log('Submitted HTML:', html);
+    console.log('Submitted Text:', text);
+});
 ```
 
 ## API Methods
@@ -61,21 +76,32 @@ editor.setContent('<h1>Hello World!</h1>');
 editor.setText('Hello World!');
 ```
 
-### Event Listener
+### Submit Handler
 ```javascript
-// Listen for content changes
-window.addEventListener('wysiwyg-change', (e) => {
-    const html = e.detail.html;
-    const text = e.detail.text;
+// Set submit handler
+editor.setSubmitHandler(({ html, text }) => {
+    // Example: Send to server
+    fetch('/api/save', {
+        method: 'POST',
+        body: JSON.stringify({ html, text }),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
 });
 ```
 
 ### Global Variables
-The editor also provides global variables for easy access in any context:
+The editor provides global variables for easy access:
+
 ```javascript
-// Access content globally
+// Real-time content (updates on every change)
 const html = window.wysiwygHTML;
 const text = window.wysiwygText;
+
+// Submitted content (updates when submit button is clicked)
+const submittedHtml = window.wysiwygSubmittedHTML;
+const submittedText = window.wysiwygSubmittedText;
 ```
 
 ## Example
@@ -92,7 +118,25 @@ const text = window.wysiwygText;
     
     <script src="path/to/wysiwyg.js"></script>
     <script>
-        const editor = new SimpleWYSIWYG('#editor');
+        // Initialize editor with submit handler
+        const editor = new SimpleWYSIWYG('#editor', {
+            onSubmit: ({ html, text }) => {
+                // Example: Update form fields
+                document.getElementById('content-html').value = html;
+                document.getElementById('content-text').value = text;
+                
+                // Example: Save to localStorage
+                localStorage.setItem('savedContent', html);
+                
+                // Example: Send to server
+                fetch('/api/save', {
+                    method: 'POST',
+                    body: JSON.stringify({ html, text })
+                });
+            }
+        });
+
+        // Set initial content
         editor.setContent('<h1>Hello World!</h1>');
     </script>
 </body>
