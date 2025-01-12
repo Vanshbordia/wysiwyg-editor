@@ -1,0 +1,166 @@
+:root {
+    --editor-primary: #3b82f6;
+    --editor-border: #e5e7eb;
+    --editor-bg: #ffffff;
+    --editor-text: #374151;
+    --editor-hover-bg: #f3f4f6;
+    --editor-active-bg: #e5e7eb;
+    --editor-shadow: rgba(0, 0, 0, 0.05);
+}
+
+.simple-wysiwyg-toolbar {
+    padding: 8px;
+    background: var(--editor-bg);
+    border: 1px solid var(--editor-border);
+    border-bottom: none;
+    border-radius: 12px 12px 0 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    align-items: center;
+}
+
+.simple-wysiwyg-btn {
+    padding: 6px;
+    background: transparent;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    line-height: 1;
+    min-width: 30px;
+    height: 30px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s ease;
+    color: var(--editor-text);
+}
+
+.simple-wysiwyg-btn:hover {
+    background: var(--editor-hover-bg);
+    color: var(--editor-primary);
+}
+
+.simple-wysiwyg-btn:active {
+    background: var(--editor-active-bg);
+    transform: translateY(1px);
+}
+
+.simple-wysiwyg-select {
+    padding: 6px 24px 6px 8px;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    background: transparent url('data:image/svg+xml;utf8,<svg fill="%23374151" height="16" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>') no-repeat right 4px center;
+    cursor: pointer;
+    outline: none;
+    min-width: 100px;
+    height: 30px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    transition: all 0.15s ease;
+    color: var(--editor-text);
+}
+
+.simple-wysiwyg-select:hover {
+    background-color: var(--editor-hover-bg);
+}
+
+.simple-wysiwyg-select:focus {
+    background-color: var(--editor-hover-bg);
+}
+
+/* Style for block select dropdown */
+.simple-wysiwyg-block-select {
+    min-width: 130px;
+}
+
+.simple-wysiwyg-block-select option {
+    padding: 8px;
+    font-size: 14px;
+}
+
+.simple-wysiwyg-separator {
+    width: 1px;
+    height: 20px;
+    background: var(--editor-border);
+    margin: 0 2px;
+}
+
+.simple-wysiwyg-editor {
+    min-height: 250px;
+    padding: 20px;
+    background: var(--editor-bg);
+    border: 1px solid var(--editor-border);
+    border-radius: 0 0 12px 12px;
+    outline: none;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--editor-text);
+}
+
+.simple-wysiwyg-editor:focus {
+    border-color: var(--editor-primary);
+}
+
+/* Styling for different heading levels */
+.simple-wysiwyg-editor h1 { font-size: 2em; margin: 1em 0 0.5em; font-weight: 600; color: var(--editor-text); }
+.simple-wysiwyg-editor h2 { font-size: 1.7em; margin: 0.83em 0 0.5em; font-weight: 600; color: var(--editor-text); }
+.simple-wysiwyg-editor h3 { font-size: 1.4em; margin: 0.83em 0 0.5em; font-weight: 600; color: var(--editor-text); }
+.simple-wysiwyg-editor h4 { font-size: 1.2em; margin: 0.83em 0 0.5em; font-weight: 600; color: var(--editor-text); }
+.simple-wysiwyg-editor h5 { font-size: 1.1em; margin: 0.83em 0 0.5em; font-weight: 600; color: var(--editor-text); }
+.simple-wysiwyg-editor h6 { font-size: 1em; margin: 0.83em 0 0.5em; font-weight: 600; color: var(--editor-text); }
+
+/* List styling */
+.simple-wysiwyg-editor ul,
+.simple-wysiwyg-editor ol {
+    padding-left: 1.5em;
+    margin: 0.5em 0;
+}
+
+.simple-wysiwyg-editor ul li,
+.simple-wysiwyg-editor ol li {
+    margin: 0.3em 0;
+}
+
+/* Paragraph spacing */
+.simple-wysiwyg-editor p {
+    margin: 0.8em 0;
+}
+
+/* Code block styling */
+.simple-wysiwyg-editor pre {
+    background: var(--editor-hover-bg);
+    border: 1px solid var(--editor-border);
+    border-radius: 8px;
+    padding: 1em;
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+    font-size: 0.9em;
+    overflow-x: auto;
+    margin: 1em 0;
+}
+
+/* Blockquote styling */
+.simple-wysiwyg-editor blockquote {
+    border-left: 3px solid var(--editor-primary);
+    margin: 1em 0;
+    padding: 0.5em 1em;
+    background: var(--editor-hover-bg);
+    color: var(--editor-text);
+    font-style: italic;
+}
+
+/* Link styling */
+.simple-wysiwyg-editor a {
+    color: var(--editor-primary);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.15s ease;
+}
+
+.simple-wysiwyg-editor a:hover {
+    border-bottom-color: var(--editor-primary);
+} 
